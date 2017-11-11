@@ -1,0 +1,29 @@
+{
+  "name": "local-session-storage",
+  "version": "1.1.1",
+  "description": "Set and get your web session && local storage : sync && async",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kleviscipi/local-session-storage.git"
+  },
+  "keywords": [
+    "local-storage",
+    "local-session-storage",
+    "session-storage",
+    "storage",
+    "local storage",
+    "web local storage",
+    "async storage",
+    "sync storage"
+  ],
+  "author": "Klevis Cipi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kleviscipi/local-session-storage/issues"
+  },
+  "homepage": "https://github.com/kleviscipi/local-session-storage#readme"
+}
