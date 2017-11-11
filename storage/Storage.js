@@ -5,14 +5,16 @@ class Storage{
 		//stafs here
 		this.core = core
 	}
-	getLive(obj_name,callback){
+	getLive(key,callback){
 		
 		if(typeof callback !== "function"){
 			Debug("Callback is not a function");
 		}else{
-			if( obj_name !=="undefined" && obj_name !== null ){
-				return asyncGet(obj_name).then((values)=>{
-					return asynGet(obj_name);
+			if( typeof key !== "undefined" && key !== null && typeof key === 'string' ){
+				
+				let that_ = this
+				return that_.asyncGet(key).then((values)=>{
+					return that_.asyncGet(key);
 				}).then((values)=>{
 					/***************CALLBACK FUNC******************
 					*   local storage is sunc and we set a callbacn function 
@@ -20,68 +22,88 @@ class Storage{
 					*
 					*********************************************/
 					callback(values)
-				})
+				})					
+
 			}else{
-				return {};
+
+				callback(null)
 			}
 		}
 
 	}
-	get(obj_name){
-		if( obj_name !== "undefined" && obj_name !== null ){
-			 return JSON.parse(window[this.core].getItem(obj_name));
+	get(key){
+		if( typeof key !== "undefined" && key !== null && typeof key === "string"  ){
+			 return JSON.parse(window[this.core].getItem(key));
 		}else{
-			Debug("Obj name is empty");
+			Debug("Key name is empty or is undefined or is not a string");
 			return {};
 		}
 	}
-	set(obj_name,values = null){
-		if( obj_name !=="undefined" && obj_name !== null ){
+	set(key,values = null){
+		if( typeof key !=="undefined" && key !== null && typeof  key === "string" ){
 			/*************************************
 			* WE USE Object assign for merge the last obj with new
 			*
 			***************************************/
-			let val = Object.assign({}, JSON.parse(window[this.core].getItem(obj_name)) ,values )
-			window[this.core].setItem(obj_name, JSON.stringify(val));
+			let that_ = this
+			let val = Object.assign({}, JSON.parse(window[that_.core].getItem(key)) ,values )
+			window[that_.core].setItem(key, JSON.stringify(val));
 		}else{
-			Debug('undefined or null obj_name on LocalStorage.set func');
+			Debug('undefined or null key on Storage.'+ this.core +'.set func');
 		}
 	}
 	clear(){
 		window[this.core].clear()
 	}
-	remove(obj_name){
-		if(obj_name !== null || typeof obj_name !== "undefined"){
-			window[CORE_STORAGE].removeItem(obj_name)
+	remove(key){
+		if(key !== null && typeof key !== "undefined" && typeof key ==="string" ){
+			window[this.core].removeItem(key)
 		}else{
 			Debug("Check the obj, it is empty  or undefined")
-			Debug(obj_name)
+			Debug(key)
 		}
 	}
-	asyncSet(obj_name,value){
+	asyncSet(key,value){
 		/**
 		* Set the promise function for resolve the live values
 		*
 		**/
+		let that_ = this
 		return  Promise.resolve().then(function(){
-            window[this.core].setItem(key, value);
+            window[that_.core].setItem(key, value);
 		})
 	}
-	asyncGet(obj_name){
+	asyncGet(key){
 		/**
 		*
 		* Set the promise function for resolve the live values
 		*
 		**/
+		let that_ = this
 		return  Promise.resolve().then(function(){
-			return JSON.parse(window[this.core].getItem(obj_name))
+			return JSON.parse(window[that_.core].getItem(key))
 		})
 	}
-	length(obj_name){
-		//TODO
+	length(key){
+		if(key !== null && typeof key !== 'undefined' && typeof key === "string"){
+			let that_   = this
+			let obj 	= JSON.parse(window[that_.core].getItem(key))	
+			
+			if( typeof obj === "object"){
+				return Object.keys(obj).length
+			}else if(Array.isArray(obj)){
+				return obj.length
+			}else{
+				return 0;
+			}
+		}else{
+
+			Debug("Key name is empty");
+		}
+		
 	}
-	lengthAll(obj_name){
-		//TODO
+	lengthAll(){
+		return window[this.core].length;
 	}
 	msg(){
 		

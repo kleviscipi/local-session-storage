@@ -53,10 +53,12 @@ On React js get your storage on refresh page ore on change component and return 
 		***************************/
 
 		/******LOCAL*********/
+		let that_ = this
+
 		Storage.Local.getLive('objname',function(storage){
 			/***NOW CHANGE THE STATE***/
 
-			this.setState((state)=>{
+			that_.setState((state)=>{
 				return Object.assign({},state,storage)
 			})
 
@@ -64,10 +66,10 @@ On React js get your storage on refresh page ore on change component and return 
 		})
 
 		/***SESSION*****/
-		Storage.Local.getLive('objname',function(storage){
+		Storage.Session.getLive('objname',function(storage){
 			/***NOW CHANGE THE STATE***/
 
-			this.setState((state)=>{
+			that_.setState((state)=>{
 				return Object.assign({},state,storage)
 			})
 
@@ -94,7 +96,22 @@ Clear && Remove
 
 ```
 
-Note: This examples are for react js but you can use this library on all js framework 
+Length && LengthAll of a key stored to session or local storage
+
+```js
+
+let lengthObjLocal 		= Storage.Local.length('objname');
+let lengthObjSession 	= Storage.Session.length('objname');
+
+let LengthAllLocal 	    = Storage.Local.lengthAll();
+let LengthAllSession    = Storage.Session.lengthAll();
+
+
+
+```
+
+
+Note: This examples are used for react js but you can use this library on all js framework 
 
 
 
