@@ -1,12 +1,12 @@
 
-##Web Local && Session Storage
+#Web Local && Session Storage
 
 
-##INSTALL
+#INSTALL
 `npm install local-session-storage`
 
 
-##EXAMPLES
+#EXAMPLES
 
 ```js
 let Storage = require('local-session-storage');
